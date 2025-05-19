@@ -1,0 +1,11 @@
+cobra
+escher
+networkx
+libsbml
+matplotlib
+pandas
+numpy
+efmtool
+XlsxWriter
+json
+model-polisher @ git+https://github.com/draeger-lab/MPClient.git
