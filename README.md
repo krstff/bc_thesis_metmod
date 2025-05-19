@@ -1,4 +1,4 @@
-# bc_thesis_metmod
+# *Met*abolic *Mod*elling library
 Thesis available at:
 
 File structure:
