@@ -100,7 +100,7 @@ def polish_model(model_path: str, polished_path: str, print_diff: bool=False) ->
     else:
         print("Failed to save the polished SBML model.")
     if print_diff:
-        polished_result["diff"]
+        print(polished_result["diff"])
 
 def escher_build(model_path: str, map_path: str, online_map: bool=False, highlight_missing: bool=False, reaction_data: dict=None, gene_data: dict=None):
     """Builds an Escher visualisation from a COBRA model and a map file.
@@ -213,7 +213,7 @@ def xlsx_to_cobra(file_path: str, model_name: str) -> cobra.Model:
         reaction.upper_bound = row[RXN_UPPER_BOUND] if not pd.isna(row[RXN_UPPER_BOUND]) else DEFAULT_UPPER_BOUND
         if not pd.isna(row[RXN_GPR]):
             reaction.gene_reaction_rule=row[RXN_GPR]
-        reaction.subsytem=row[RXN_SUBSYSTEM]
+        reaction.subsystem=row[RXN_SUBSYSTEM]
 
         model.add_reactions([reaction])
         model.reactions.get_by_id(row[RXN_ID]).build_reaction_from_string(row[RXN_EQUATION]) # This function has to have access to model - therefore the reaction needs to be already present in model
@@ -224,10 +224,9 @@ def xlsx_to_cobra(file_path: str, model_name: str) -> cobra.Model:
 def print_graph_nodes_names(G: nx.Graph) -> None:
     print(nx.get_node_attributes(G, "name"))
 
-def find_graph_names_with(G: nx.DiGraph, str: str) -> list:
-    """Returns a list of names of nodes that contain the given string
-    in their name"""
-    return [name for name in nx.get_node_attributes(G, "name") if str in name]
+def find_graph_names_with(G: nx.DiGraph, string: str) -> list:
+    """Returns a list of node names that contain the given string."""
+    return [name for name in nx.get_node_attributes(G, "name") if string in name]
 
 def print_neighbors(G: nx.Graph, node: str):
     for n in G.neighbors(node):
@@ -344,7 +343,7 @@ def prune_graph(G: nx.Graph, threshold: int, to_keep: list) -> nx.Graph:
     return G_pruned
 
 def sync_xlsx(input_file: str, output_name: str, save_json: bool=True) -> None:
-    """Coverts xlsx file to json and SBML.
+    """Converts xlsx file to json and SBML.
 
     Parameters:
     input_file (str): Path to the input xlsx file.
@@ -417,11 +416,11 @@ def add_objective_function(formula: str, model: cobra.Model, name: str="Objectiv
     reaction.build_reaction_from_string(formula)
     model.objective = reaction
 
-def decode_sbml(str: str) -> str:
-    return str.replace("__45__", "-").replace("__46__", ".").replace("__95__", "_")
+def decode_sbml(string: str) -> str:
+    return string.replace("__45__", "-").replace("__46__", ".").replace("__95__", "_")
 
-def encode_sbml(str: str) -> str:
-    return str.replace("_", "__95__").replace("+", "__43__").replace(",", "__44__").replace("-", "__45__").replace(".", "__46__")
+def encode_sbml(string: str) -> str:
+    return string.replace("_", "__95__").replace("+", "__43__").replace(",", "__44__").replace("-", "__45__").replace(".", "__46__")
 
 def extract_bigg_id(annotation, keyword):
     """Helper function.
