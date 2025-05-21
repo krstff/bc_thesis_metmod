@@ -422,7 +422,7 @@ def decode_sbml(string: str) -> str:
 def encode_sbml(string: str) -> str:
     return string.replace("_", "__95__").replace("+", "__43__").replace(",", "__44__").replace("-", "__45__").replace(".", "__46__")
 
-def extract_bigg_id(annotation, keyword):
+def extract_bigg_id(annotation, keyword: str) -> str:
     """Helper function.
     Extracts BiGG ID from the annotation of a reaction or metabolite.
     """
