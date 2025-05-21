@@ -353,7 +353,6 @@ def sync_xlsx(input_file: str, output_name: str, save_json: bool=True) -> None:
     Returns:
     None
     """
-    # coverts xlsx file to json and SBML
     model = xlsx_to_cobra(input_file, output_name)
     write_sbml_model(model,  output_name + ".xml")
     if save_json:
@@ -808,7 +807,6 @@ def filter_gene_csv(input_file: str, col1_idx: int, col2_idx: int, output_file: 
     col2 = df.columns[col2_idx]
     
     # Create a new DataFrame with the selected columns
-
     new_df = df[[id_column, col1, col2]].copy()
     new_df.columns = ["id", "re_x", "re_y"]
 
